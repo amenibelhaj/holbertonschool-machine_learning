@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""
+3-flip_me_over
+Module containing the function matrix_transpose(matrix)
+that returns the transpose of a 2D matrix.
+"""
+
+
 def matrix_transpose(matrix):
     """
     Returns the transpose of a 2D matrix.
@@ -10,24 +17,25 @@ def matrix_transpose(matrix):
     Returns:
     list of lists: A new matrix representing the transpose of the input matrix.
     """
-    # 1. Determine the dimensions of the original matrix
-    # The number of rows (m) is the length of the matrix.
+    # 1. Get the original matrix dimensions (rows and columns)
     num_rows = len(matrix)
 
-    # The number of columns (n) is the length of the first row.
-    # Since the matrix is guaranteed to be non-empty, matrix[0] is safe.
+    # Check if the matrix is truly 2D.
+    if num_rows == 0:
+        # Should not happen based on problem constraints ("never empty"),
+        # but prevents an error if the matrix is [[]]
+        return []
+
     num_cols = len(matrix[0])
 
-    # The resulting transpose matrix will have shape num_cols x num_rows.
-
-    # 2. Use nested list comprehensions to build the new matrix
-    # The outer loop iterates over the new rows (which were the old columns)
-    # The inner loop iterates over the new columns (which were the old rows)
+    # 2. Build the new transposed matrix by swapping rows (i) and columns (j)
     transposed_matrix = [
-        # Iterate over the old rows (i) to form the new columns
-        [matrix[i][j] for i in range(num_rows)]
-
-        # Iterate over the old columns (j) to form the new rows
+        # New Rows: Iterate over the old columns (j)
+        [
+            # New Columns: Iterate over the old rows (i)
+            matrix[i][j]
+            for i in range(num_rows)
+        ]
         for j in range(num_cols)
     ]
 
