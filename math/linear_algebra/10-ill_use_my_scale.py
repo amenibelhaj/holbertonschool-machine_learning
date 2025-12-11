@@ -5,8 +5,6 @@ Module containing the function np_shape(matrix) that calculates
 the shape of a numpy.ndarray.
 """
 
-import numpy as np
-
 
 def np_shape(matrix):
     """
@@ -18,6 +16,5 @@ def np_shape(matrix):
     Returns:
         tuple: A tuple of integers representing the shape of the array.
     """
-    # The .shape attribute of a numpy array automatically returns the shape
-    # as a tuple, fulfilling all requirements without loops or conditionals.
+    # Access the built-in .shape attribute of the NumPy array object.
     return matrix.shape
