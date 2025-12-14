@@ -1,7 +1,2 @@
 #!/usr/bin/env python3
-"""
-Task 0: Sigma is for Sum
-Output the expected result of the summation.
-"""
-
 print(3)
