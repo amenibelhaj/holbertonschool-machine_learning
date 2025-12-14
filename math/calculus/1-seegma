@@ -1,9 +1,6 @@
 # Task 1: Sigma notation sum
 
-i = 1j  # imaginary unit in Python
-total = 0
-
-for k in range(1, 5):  # k = 1 to 4 inclusive
-    total += 9*i - 2*k
-
+# Compute the sum of 9*i - 2*k for k=1..4
+# Here, i is not imaginary; just treat the formula numerically
+total = sum(9 - 2*k for k in range(1, 5))
 print(total)
