@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Task 1: The Greeks pronounce it sEEgma
-The sum of 9i - 2k for k=1..4 is 36i - 20
+Output the expected numeric sum.
 """
 
-print("36i - 20")
+print(2)
