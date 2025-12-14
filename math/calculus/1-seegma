@@ -1,7 +1,2 @@
 #!/usr/bin/env python3
-"""
-Task 1: The Greeks pronounce it sEEgma
-Output the expected numeric sum.
-"""
-
-print(2)
+print("36i - 20")
