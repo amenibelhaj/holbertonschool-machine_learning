@@ -49,4 +49,3 @@ def frequency():
     plt.hist(student_grades, bins, edgecolor='black')
     plt.xticks(np.arange(0, 110, 10))
     plt.show()
-    
