@@ -1,18 +1,32 @@
 #!/usr/bin/env python3
+"""
+Module that plots a line graph.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def line():
-    # y is calculated as [0^3, 1^3, ..., 10^3]
+    """
+    Plots y = x^3 as a solid red line graph.
+
+    The x-axis ranges from 0 to 10.
+    """
+    # Create y values: y = x^3 for x from 0 to 10
     y = np.arange(0, 11) ** 3
+
+    # Create x values from 0 to 10
+    x = np.arange(0, 11)
+
+    # Create a figure with the default size
     plt.figure(figsize=(6.4, 4.8))
 
-    # your code here
-    # 1. Use plt.plot()
-    # 2. Pass 'y' as the data. (When the x-data is omitted, it defaults to the indices: 0, 1, ..., 10)
-    # 3. Use the format string 'r-' for a solid red line.
-    plt.plot(y, 'r-')
-    
-    # Optional: Display the plot. In a script environment, this would show the window.
-    # If the environment saves the image automatically, this line may not be needed.
+    # Plot y against x as a solid red line
+    plt.plot(x, y, 'r-')
+
+    # Set the limits of the x-axis
+    plt.xlim(0, 10)
+
+    # Display the plot
     plt.show()
