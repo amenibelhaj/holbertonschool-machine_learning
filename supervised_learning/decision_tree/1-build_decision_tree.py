@@ -36,11 +36,11 @@ class Node:
         """
         left = self.left_child.count_nodes_below(only_leaves=only_leaves)
         right = self.right_child.count_nodes_below(only_leaves=only_leaves)
-        
+
         if only_leaves:
             # If counting only leaves, this node (internal) adds 0 to the sum
             return left + right
-        
+
         # If counting all nodes, this node adds 1 to the sum of its children
         return 1 + left + right
 
