@@ -10,7 +10,7 @@ import numpy as np
 
 class Node:
     """
-    Represents a decision node in a decision tree, which can split data based
+ Represents a decision node in a decision tree, which can split data based
     on features and thresholds.
     """
     def __init__(self, feature=None, threshold=None, left_child=None,
