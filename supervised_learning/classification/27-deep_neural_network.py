@@ -1,80 +1,211 @@
 #!/usr/bin/env python3
 
-import matplotlib.pyplot as plt
+"""
+This is the DeepNeuralNetwork class module.
+"""
+import pickle
 import numpy as np
+import matplotlib.pyplot as plt
 
-Deep27 = __import__('27-deep_neural_network').DeepNeuralNetwork
-Deep28 = __import__('28-deep_neural_network').DeepNeuralNetwork
-one_hot_encode = __import__('24-one_hot_encode').one_hot_encode
-one_hot_decode = __import__('25-one_hot_decode').one_hot_decode
 
-lib= np.load('../data/MNIST.npz')
-X_train_3D = lib['X_train']
-Y_train = lib['Y_train']
-X_valid_3D = lib['X_valid']
-Y_valid = lib['Y_valid']
-X_test_3D = lib['X_test']
-Y_test = lib['Y_test']
-X_train = X_train_3D.reshape((X_train_3D.shape[0], -1)).T
-X_valid = X_valid_3D.reshape((X_valid_3D.shape[0], -1)).T
-X_test = X_test_3D.reshape((X_test_3D.shape[0], -1)).T
-Y_train_one_hot = one_hot_encode(Y_train, 10)
-Y_valid_one_hot = one_hot_encode(Y_valid, 10)
-Y_test_one_hot = one_hot_encode(Y_test, 10)
+class DeepNeuralNetwork:
+    """
+    Represents a deep neural network to perform classification.
+    """
 
-print('Sigmoid activation:')
-deep27 = Deep27.load('27-output.pkl')
-A_one_hot27, cost27 = deep27.evaluate(X_train, Y_train_one_hot)
-A27 = one_hot_decode(A_one_hot27)
-accuracy27 = np.sum(Y_train == A27) / Y_train.shape[0] * 100
-print("Train cost:", cost27)
-print("Train accuracy: {}%".format(accuracy27))
-A_one_hot27, cost27 = deep27.evaluate(X_valid, Y_valid_one_hot)
-A27 = one_hot_decode(A_one_hot27)
-accuracy27 = np.sum(Y_valid == A27) / Y_valid.shape[0] * 100
-print("Validation cost:", cost27)
-print("Validation accuracy: {}%".format(accuracy27))
-A_one_hot27, cost27 = deep27.evaluate(X_test, Y_test_one_hot)
-A27 = one_hot_decode(A_one_hot27)
-accuracy27 = np.sum(Y_test == A27) / Y_test.shape[0] * 100
-print("Test cost:", cost27)
-print("Test accuracy: {}%".format(accuracy27))
+    def __init__(self, nx, layers):
+        """
+        Initialize the deep neural network object.
+        """
+        if not isinstance(nx, int):
+            raise TypeError("nx must be an integer")
+        if nx < 1:
+            raise ValueError("nx must be a positive integer")
 
-fig = plt.figure(figsize=(10, 10))
-for i in range(100):
-    fig.add_subplot(10, 10, i + 1)
-    plt.imshow(X_test_3D[i])
-    plt.title(A27[i])
-    plt.axis('off')
-plt.tight_layout()
-plt.show()
+        if not isinstance(layers, list) or len(layers) == 0:
+            raise TypeError("layers must be a list of positive integers")
+        if not all(map(lambda x: isinstance(x, int) and x > 0, layers)):
+            raise TypeError("layers must be a list of positive integers")
 
-print('\nTanh activaiton:')
+        self.__L = len(layers)
+        self.__cache = {}
+        self.__weights = {}
 
-deep28 = Deep28.load('28-saved.pkl')
-A_one_hot28, cost28 = deep28.train(X_train, Y_train_one_hot, iterations=100,
-                                step=10, graph=False)
-A28 = one_hot_decode(A_one_hot28)
-accuracy28 = np.sum(Y_train == A28) / Y_train.shape[0] * 100
-print("Train cost:", cost28)
-print("Train accuracy: {}%".format(accuracy28))
-A_one_hot28, cost28 = deep28.evaluate(X_valid, Y_valid_one_hot)
-A28 = one_hot_decode(A_one_hot28)
-accuracy28 = np.sum(Y_valid == A28) / Y_valid.shape[0] * 100
-print("Validation cost:", cost28)
-print("Validation accuracy: {}%".format(accuracy28))
-A_one_hot28, cost28 = deep28.evaluate(X_test, Y_test_one_hot)
-A28 = one_hot_decode(A_one_hot28)
-accuracy28 = np.sum(Y_test == A28) / Y_test.shape[0] * 100
-print("Test cost:", cost28)
-print("Test accuracy: {}%".format(accuracy28))
-deep28.save('28-output')
+        for i in range(self.__L):
+            if i == 0:
+                # On layer 0: first layer's length is nx
+                prev_layer = nx
+            else:
+                # Otherwise we use the previous layer length
+                prev_layer = layers[i - 1]
 
-fig = plt.figure(figsize=(10, 10))
-for i in range(100):
-    fig.add_subplot(10, 10, i + 1)
-    plt.imshow(X_test_3D[i])
-    plt.title(A28[i])
-    plt.axis('off')
-plt.tight_layout()
-plt.show()
+            # He Normal (He-et-al) initialization
+            self.__weights[f"W{i + 1}"] = np.random.randn(
+                    layers[i], prev_layer) * np.sqrt(2 / prev_layer)
+
+            self.__weights[f"b{i + 1}"] = np.zeros((layers[i], 1))
+
+    @property
+    def L(self):
+        return self.__L
+
+    @property
+    def cache(self):
+        return self.__cache
+
+    @property
+    def weights(self):
+        return self.__weights
+
+    def forward_prop(self, X):
+        """
+        Calculates the forward propagation of the neural network.
+        """
+        # Setting up the first input of first layer : X
+        self.__cache["A0"] = X
+
+        for i in range(1, self.__L + 1):
+            # Previous layer activation output, used as input
+            prev_A = self.__cache[f"A{i - 1}"]
+
+            Z = np.matmul(self.__weights[f"W{i}"], prev_A)\
+                + self.__weights[f"b{i}"]
+
+            # Apply sigmoid for all layers except the last one
+            if i < self.__L:
+                activation = 1 / (1 + np.exp(-Z))
+            else:
+                # For the output layer, use softmax activation
+                exp_Z = np.exp(Z - np.max(Z, axis=0, keepdims=True))
+                activation = exp_Z / np.sum(exp_Z, axis=0, keepdims=True)
+
+            # Store activation in cache
+            self.__cache[f"A{i}"] = activation
+
+        # The output of the network is in A{layer} (the last output)
+        return self.__cache[f"A{self.__L}"], self.__cache
+
+    def cost(self, Y, A):
+        """
+        Calculates the cost of the model using logistic regression.
+        """
+        m = Y.shape[1]
+        return -(1 / m) * np.sum(Y * np.log(A))
+
+    def evaluate(self, X, Y):
+        """
+        Evaluates the neural netowrk's predictions
+        """
+        output, cache = self.forward_prop(X)
+
+        # Similar trick as in one_hot_encode()
+        prediction = np.eye(output.shape[0])[np.argmax(output, axis=0)].T
+
+        # Cost of activated output on "output" layer
+        cost = self.cost(Y, output)
+
+        return prediction, cost
+
+    def gradient_descent(self, Y, cache, alpha=0.05):
+        """
+        Calculates one pass of gradient descent on the network.
+        """
+        m = Y.shape[1]
+        dZ = cache[f"A{self.__L}"] - Y
+
+        # In reverse layer order :
+        for i in range(self.__L, 0, -1):
+            # Previous layer activation output
+            prev_A = cache[f"A{i - 1}"]
+
+            dW = (1 / m) * np.matmul(dZ, prev_A.T)
+            db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
+
+            # Prepare the next layer's gradient calculation
+            dZ = np.matmul(
+                    self.__weights[f"W{i}"].T, dZ) * prev_A * (1 - prev_A)
+
+            # Updating parameters using the gradients and the learning rate
+            self.__weights[f"W{i}"] -= alpha * dW
+            self.__weights[f"b{i}"] -= alpha * db
+
+    def train(self, X, Y, iterations=5000, alpha=0.05,
+              verbose=True, graph=True, step=100):
+        """
+        Method to train deep neural network
+        """
+
+        if not isinstance(iterations, int):
+            raise TypeError("iterations must be an integer")
+        if iterations <= 0:
+            raise ValueError("iterations must be a positive integer")
+        if not isinstance(alpha, float):
+            raise TypeError("alpha must be a float")
+        if alpha <= 0:
+            raise ValueError("alpha must be positive")
+        if not isinstance(verbose, bool):
+            raise TypeError("verbose must be a boolean")
+        if not isinstance(graph, bool):
+            raise TypeError("graph must be a boolean")
+        if verbose is True or graph is True:
+            if not isinstance(step, int):
+                raise TypeError("step must be an integer")
+            if step <= 0 or step > iterations:
+                raise ValueError("step must be positive and <= iterations")
+
+        # list to store cost /iter
+        costs = []
+        count = []
+
+        for i in range(iterations + 1):
+            # run forward propagation
+            A, cache = self.forward_prop(X)
+
+            # run gradient descent for all iterations except the last one
+            if i != iterations:
+                self.gradient_descent(Y, self.cache, alpha)
+
+            cost = self.cost(Y, A)
+
+            # store cost for graph
+            costs.append(cost)
+            count.append(i)
+
+            # verbose TRUE, every step + first and last iteration
+            if verbose and (i % step == 0 or i == 0 or i == iterations):
+                # run evaluate
+                print("Cost after {} iterations: {}".format(i, cost))
+
+        # graph TRUE after training complete
+        if graph:
+            plt.plot(count, costs, 'b-')
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.title('Training Cost')
+            plt.show()
+
+        return self.evaluate(X, Y)
+
+    def save(self, filename):
+        """
+        Saves the instance object to a file in pickle format.
+        """
+        if not filename.endswith(".pkl"):
+            filename += ".pkl"
+
+        with open(filename, "wb") as file:
+            pickle.dump(self, file)
+
+    @staticmethod
+    def load(filename):
+        """
+        Loads a pickled DeepNeuralNetowrk object.
+        """
+
+        try:
+            with open(filename, "rb") as file:
+                unpickled_obj = pickle.load(file)
+            return unpickled_obj
+
+        except FileNotFoundError:
+            return None
