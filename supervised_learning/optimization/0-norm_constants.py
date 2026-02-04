@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import numpy as np
 
+
 def normalization_constants(X):
     """
-    Calcule la moyenne (mean) et l'écart-type (std) de chaque colonne d'une matrice X.
+    Calcule la moyenne (mean) et l'écart-type (std) de chaque colonne
 
     X : numpy.ndarray de forme (m, nx)
         m = nombre de points de données (lignes)
