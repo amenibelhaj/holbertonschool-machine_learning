@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 import numpy as np
 
-
 def normalization_constants(X):
     """
-    Calcule la moyenne (mean) et l'écart-type (std) de chaque colonne
+    Calculates the normalization (standardization) constants of a matrix.
 
-    X : numpy.ndarray de forme (m, nx)
-        m = nombre de points de données (lignes)
-        nx = nombre de features (colonnes)
+    X is a numpy.ndarray of shape (m, nx) to normalize
+        m is the number of data points
+        nx is the number of features
 
-    Returns:
-        mean : numpy.ndarray de forme (nx,) → moyenne de chaque colonne
-        std  : numpy.ndarray de forme (nx,) → écart-type de chaque colonne
+    Returns: the mean and standard deviation of each feature, respectively
     """
-    mean = X.mean(axis=0)  # moyenne colonne par colonne
-    std = X.std(axis=0)    # écart-type colonne par colonne
+    mean = X.mean(axis=0)
+    std = X.std(axis=0)
     return mean, std
