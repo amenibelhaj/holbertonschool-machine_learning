@@ -12,7 +12,7 @@ def save_model(network, filename):
     Args:
         network: the model to save
         filename: path of the file to save the model to
-    
+
     Returns:
         None
     """
@@ -25,7 +25,7 @@ def load_model(filename):
 
     Args:
         filename: path of the file to load the model from
-    
+
     Returns:
         The loaded model
     """
