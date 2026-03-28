@@ -19,9 +19,9 @@ def sensitivity(confusion):
     """
     # True Positives are the diagonal elements
     tp = np.diag(confusion)
-    
+
     # Total actual observations for each class are the row sums
     actual_total = np.sum(confusion, axis=1)
-    
+
     # Sensitivity = TP / (TP + FN)
     return tp / actual_total

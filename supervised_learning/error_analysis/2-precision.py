@@ -19,10 +19,10 @@ def precision(confusion):
     """
     # True Positives are the diagonal elements
     tp = np.diag(confusion)
-    
+
     # Total predicted observations for each class are the column sums
     # We use axis=0 to sum down the columns
     predicted_total = np.sum(confusion, axis=0)
-    
+
     # Precision = TP / (TP + FP)
     return tp / predicted_total
