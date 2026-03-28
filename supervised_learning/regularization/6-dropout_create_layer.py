@@ -17,25 +17,27 @@ def dropout_create_layer(prev, n, activation, keep_prob, training=True):
         training: boolean indicating whether the model is in training mode
 
     Returns:
-        The output of the new layer
+        the output of the new layer
     """
-    # Initialize weights using VarianceScaling (standard for Keras Dense)
-    initializer = tf.keras.initializers.VarianceScaling(
-        scale=2.0, mode='fan_avg', distribution='uniform'
+    # Use VarianceScaling to match the expected weight initialization
+    init = tf.keras.initializers.VarianceScaling(
+        scale=2.0,
+        mode='fan_avg',
+        distribution='uniform'
     )
 
-    # 1. Create the Dense layer
+    # Create the Dense layer
     layer = tf.keras.layers.Dense(
         units=n,
         activation=activation,
-        kernel_initializer=initializer
+        kernel_initializer=init
     )
-    
-    # 2. Get the output of the dense layer
-    x = layer(prev)
-    
-    # 3. Apply Dropout
-    # rate = 1 - keep_prob
+
+    # Get the output from the Dense layer
+    res = layer(prev)
+
+    # Apply Dropout
+    # rate in Keras is the probability of DROPPING (1 - keep_prob)
     dropout = tf.keras.layers.Dropout(rate=1 - keep_prob)
-    
-    return dropout(x, training=training)
+
+    return dropout(res, training=training)
