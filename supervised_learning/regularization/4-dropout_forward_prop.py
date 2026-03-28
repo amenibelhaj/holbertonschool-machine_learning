@@ -36,15 +36,15 @@ def dropout_forward_prop(X, weights, L, keep_prob):
         else:
             # Tanh for hidden layers
             A = np.tanh(Z)
-            
+
             # Create Dropout Mask
             # Random values < keep_prob become 1, else 0
             D = np.random.rand(A.shape[0], A.shape[1])
             D = (D < keep_prob).astype(int)
-            
+
             # Apply mask and rescale (Inverted Dropout)
             A = (A * D) / keep_prob
-            
+
             cache['D' + str(i)] = D
             cache['A' + str(i)] = A
 

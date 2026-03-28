@@ -25,7 +25,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         A_prev = cache['A' + str(i - 1)]
         W_key = 'W' + str(i)
         b_key = 'b' + str(i)
-        
+  
         # Calculate gradients
         # dW = (1/m) * (dz . A_prev.T) + (lambtha/m) * W
         dw = (np.matmul(dz, A_prev.T) / m) + (lambtha / m * weights[W_key])
