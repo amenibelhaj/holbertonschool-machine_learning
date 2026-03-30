@@ -1,0 +1,31 @@
+# -------------------------
+# 4️⃣ Gradient Descent
+# -------------------------
+# Create target values (true answers)
+true_weights = np.array([3, -2, 1])  # pretend true weights
+y_true = X_norm @ true_weights        # matrix multiplication
+
+# Initialize random weights
+weights = np.random.randn(3)
+learning_rate = 0.1
+iterations = 10
+
+print("\n--- Gradient Descent ---")
+for i in range(iterations):
+    # Prediction
+    y_pred = X_norm @ weights
+    
+    # Compute loss (Mean Squared Error)
+    loss = np.mean((y_pred - y_true)**2)
+    
+    # Compute gradient
+    gradient = (2 / X_norm.shape[0]) * X_norm.T @ (y_pred - y_true)
+    
+    # Update weights
+    weights = weights - learning_rate * gradient
+    
+    # Print progress
+    print(f"Iteration {i+1}: Loss = {loss:.4f}, Weights = {weights}")
+
+print("\nTrue weights:", true_weights)
+print("Learned weights:", weights)

@@ -20,7 +20,7 @@ def dropout_create_layer(prev, n, activation, keep_prob, training=True):
         the output of the new layer
     """
     # VarianceScaling is the specific initializer often required by Holberton
-    # scale=2.0,mode='fan_avg', distribution='uniform'matches He initialization
+    # scale=2.0,    mode='fan_avg', distribution='uniform'matches He initialization
     initializer = tf.keras.initializers.VarianceScaling(
         scale=2.0,
         mode='fan_avg',
