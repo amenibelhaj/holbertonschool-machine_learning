@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
+"""Same convolution for grayscale images"""
+
 import numpy as np
+
 
 def convolve_grayscale_same(images, kernel):
     """
@@ -13,9 +16,11 @@ def convolve_grayscale_same(images, kernel):
     pw = kw // 2
 
     # pad images
-    padded = np.pad(images,
-                    ((0, 0), (ph, ph), (pw, pw)),
-                    mode='constant')
+    padded = np.pad(
+        images,
+        ((0, 0), (ph, ph), (pw, pw)),
+        mode='constant'
+    )
 
     # output
     output = np.zeros((m, h, w))
@@ -23,10 +28,10 @@ def convolve_grayscale_same(images, kernel):
     # convolution
     for i in range(h):
         for j in range(w):
-            # extract slice
-            slice_img = padded[:, i:i+kh, j:j+kw]
-
-            # apply kernel (vectorized over m)
-            output[:, i, j] = np.sum(slice_img * kernel, axis=(1, 2))
+            slice_img = padded[:, i:i + kh, j:j + kw]
+            output[:, i, j] = np.sum(
+                slice_img * kernel,
+                axis=(1, 2)
+            )
 
     return output
