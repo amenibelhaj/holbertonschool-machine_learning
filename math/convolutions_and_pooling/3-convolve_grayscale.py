@@ -47,7 +47,7 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
             # Calculate the starting position based on stride
             v_start, v_end = i * sh, i * sh + kh
             h_start, h_end = j * sw, j * sw + kw
-            
+
             image_slice = padded_imgs[:, v_start:v_end, h_start:h_end]
             convolved[:, i, j] = np.sum(image_slice * kernel, axis=(1, 2))
 
