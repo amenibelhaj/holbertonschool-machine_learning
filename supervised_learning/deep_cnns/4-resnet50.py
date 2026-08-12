@@ -8,7 +8,7 @@ projection_block = __import__('3-projection_block').projection_block
 
 def resnet50():
     """Builds the ResNet-50 architecture."""
-    
+
     inputs = K.Input(shape=(224, 224, 3))
 
     # Initial convolution
