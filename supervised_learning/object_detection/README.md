@@ -9,3 +9,5 @@ Implementation of the YOLO v3 object detection algorithm using a pretrained Dark
 - 3-yolo.py: Non-max Suppression
 - 4-yolo.py: Load images
 - 5-yolo.py: Preprocess images
+- 6-yolo.py: Show boxes
+- 7-yolo.py: Predict
