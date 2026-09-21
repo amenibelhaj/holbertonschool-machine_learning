@@ -7,3 +7,4 @@ Implementation of common probability distributions (Poisson, Exponential, Normal
 - poisson.py: Poisson distribution
 - exponential.py: Exponential distribution
 - normal.py: Normal distribution
+- binomial.py: Binomial distribution
