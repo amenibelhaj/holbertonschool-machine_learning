@@ -4,3 +4,4 @@ Implementation of the YOLO v3 object detection algorithm using a pretrained Dark
 
 ## Tasks
 - 0-yolo.py: Initialize Yolo
+- 1-yolo.py: Process Outputs
