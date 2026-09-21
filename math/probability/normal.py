@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Defines the Normal class representing a normal distribution."""
 
+e = 2.7182818285
+pi = 3.1415926536
+
 
 class Normal:
     """Represents a normal distribution."""
@@ -52,3 +55,18 @@ class Normal:
             float: the x-value of z
         """
         return self.mean + z * self.stddev
+
+    def pdf(self, x):
+        """
+        Calculate the value of the PDF for a given x-value.
+
+        Args:
+            x (float): the x-value
+
+        Returns:
+            float: the PDF value for x
+        """
+        z = (x - self.mean) / self.stddev
+        coefficient = 1 / (self.stddev * (2 * pi) ** 0.5)
+
+        return coefficient * e ** (-0.5 * z ** 2)
