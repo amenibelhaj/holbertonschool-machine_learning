@@ -6,3 +6,4 @@ Determinants, minors, cofactors, adjugates, inverses and definiteness of matrice
 
 - 0-determinant.py: Determinant
 - 1-minor.py: Minor
+- 2-cofactor.py: Cofactor
