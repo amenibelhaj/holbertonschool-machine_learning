@@ -5,3 +5,4 @@ Implementation of Neural Style Transfer with TensorFlow, using a pretrained VGG1
 ## Tasks
 
 - 0-neural_style.py: Initialize
+- 1-neural_style.py: Load the Model
