@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Defines the Poisson class representing a Poisson distribution."""
 
+e = 2.7182818285
+
 
 class Poisson:
     """Represents a Poisson distribution."""
@@ -24,3 +26,23 @@ class Poisson:
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
             self.lambtha = float(sum(data) / len(data))
+
+    def pmf(self, k):
+        """
+        Calculate the value of the PMF for a given number of successes.
+
+        Args:
+            k (int): number of successes
+
+        Returns:
+            float: the PMF value for k, or 0 if k is out of range
+        """
+        k = int(k)
+        if k < 0:
+            return 0
+
+        factorial = 1
+        for i in range(1, k + 1):
+            factorial *= i
+
+        return (self.lambtha ** k) * (e ** -self.lambtha) / factorial
