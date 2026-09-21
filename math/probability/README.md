@@ -1,0 +1,7 @@
+# Probability
+
+Implementation of common probability distributions (Poisson, Exponential, Normal, Binomial) from scratch in Python, without external libraries.
+
+## Files
+
+- poisson.py: Poisson distribution
