@@ -5,3 +5,4 @@ Implementation of common probability distributions (Poisson, Exponential, Normal
 ## Files
 
 - poisson.py: Poisson distribution
+- exponential.py: Exponential distribution
