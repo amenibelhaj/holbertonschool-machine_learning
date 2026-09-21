@@ -9,3 +9,4 @@ Implementation of Neural Style Transfer with TensorFlow, using a pretrained VGG1
 - 2-neural_style.py: Gram Matrix
 - 3-neural_style.py: Extract Features
 - 4-neural_style.py: Layer Style Cost
+- 5-neural_style.py: Style Cost
