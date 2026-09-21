@@ -8,3 +8,5 @@ Determinants, minors, cofactors, adjugates, inverses and definiteness of matrice
 - 1-minor.py: Minor
 - 2-cofactor.py: Cofactor
 - 3-adjugate.py: Adjugate
+- 4-inverse.py: Inverse
+- 5-definiteness.py: Definiteness
