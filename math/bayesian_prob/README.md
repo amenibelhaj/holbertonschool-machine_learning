@@ -6,3 +6,4 @@ Likelihood, intersection, marginal and posterior probabilities with Bayes' rule,
 
 - 0-likelihood.py: Likelihood
 - 1-intersection.py: Intersection
+- 2-marginal.py: Marginal Probability
