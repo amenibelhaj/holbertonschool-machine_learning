@@ -5,3 +5,4 @@ Mean, covariance, correlation and the multivariate normal distribution, implemen
 ## Files
 
 - 0-mean_cov.py: Mean and Covariance
+- 1-correlation.py: Correlation
