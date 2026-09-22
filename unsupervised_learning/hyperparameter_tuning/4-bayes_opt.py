@@ -52,6 +52,7 @@ class BayesianOptimization:
                     improvement of each potential sample
         """
         mu, sigma = self.gp.predict(self.X_s)
+        sigma = np.maximum(sigma, 0)
 
         if self.minimize:
             best = np.min(self.gp.Y)
@@ -63,7 +64,7 @@ class BayesianOptimization:
         with np.errstate(divide='ignore', invalid='ignore'):
             Z = improvement / sigma
             EI = improvement * norm.cdf(Z) + sigma * norm.pdf(Z)
-            EI[sigma == 0] = 0
+            EI[sigma <= 0] = 0
 
         X_next = self.X_s[np.argmax(EI)]
 
