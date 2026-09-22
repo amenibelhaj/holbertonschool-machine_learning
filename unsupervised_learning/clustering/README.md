@@ -11,3 +11,4 @@ K-means, Gaussian Mixture Models with the EM algorithm, and hierarchical cluster
 - 4-initialize.py: Initialize GMM
 - 5-pdf.py: PDF
 - 6-expectation.py: Expectation
+- 7-maximization.py: Maximization
