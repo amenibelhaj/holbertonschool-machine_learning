@@ -7,3 +7,4 @@ K-means, Gaussian Mixture Models with the EM algorithm, and hierarchical cluster
 - 0-initialize.py: Initialize K-means
 - 1-kmeans.py: K-means
 - 2-variance.py: Variance
+- 3-optimum.py: Optimize k
