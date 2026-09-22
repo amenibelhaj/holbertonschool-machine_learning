@@ -7,3 +7,4 @@ Gaussian processes and Bayesian optimization implemented with numpy, plus hyperp
 - 0-gp.py: Initialize Gaussian Process
 - 1-gp.py: Gaussian Process Prediction
 - 2-gp.py: Update Gaussian Process
+- 3-bayes_opt.py: Initialize Bayesian Optimization
