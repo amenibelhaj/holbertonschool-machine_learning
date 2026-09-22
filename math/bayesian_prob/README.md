@@ -5,3 +5,4 @@ Likelihood, intersection, marginal and posterior probabilities with Bayes' rule,
 ## Files
 
 - 0-likelihood.py: Likelihood
+- 1-intersection.py: Intersection
