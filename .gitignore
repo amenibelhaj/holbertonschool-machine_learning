@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.h5
+detections/
+yolo_images/
+yolo_images.zip
+*.jpg
+*.png
