@@ -5,3 +5,4 @@ Vanilla, sparse, convolutional and variational autoencoders implemented with Ker
 ## Files
 
 - 0-vanilla.py: "Vanilla" Autoencoder
+- 1-sparse.py: Sparse Autoencoder
